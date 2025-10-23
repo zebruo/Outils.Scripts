@@ -1,461 +1,479 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Outils & Scripts</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    :root {
-      --bg-primary: #0f172a;
-      --bg-secondary: #1e293b;
-      --bg-card: rgba(30, 41, 59, 0.8);
-      --text-primary: #f1f5f9;
-      --text-secondary: #94a3b8;
-      --accent: #3b82f6;
-      --accent-hover: #2563eb;
-      --border: rgba(148, 163, 184, 0.2);
-      --shadow: rgba(0, 0, 0, 0.3);
-    }
-
-    body {
-      font-family: 'Inter', sans-serif;
-      background: var(--bg-primary);
-      color: var(--text-primary);
-      min-height: 100vh;
-      position: relative;
-      overflow-x: hidden;
-    }
-
-    body::before {
-      content: '';
-      position: fixed;
-      top: -50%;
-      left: -50%;
-      width: 200%;
-      height: 200%;
-      background: radial-gradient(circle, var(--accent) 0%, transparent 70%);
-      opacity: 0.05;
-      animation: pulse 15s ease-in-out infinite;
-      pointer-events: none;
-    }
-
-    @keyframes pulse {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.1); }
-    }
-
-    .container {
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 20px;
-    }
-
-    header {
-      text-align: center;
-      padding: 60px 20px 50px;
-      position: relative;
-    }
-
-    h1 {
-      font-size: 3em;
-      font-weight: 700;
-      margin-bottom: 15px;
-      background: linear-gradient(135deg, var(--accent), #8b5cf6);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      animation: fadeInDown 0.8s ease;
-    }
-
-    @keyframes fadeInDown {
-      from {
-        opacity: 0;
-        transform: translateY(-30px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    .subtitle {
-      font-size: 1.1em;
-      color: var(--text-secondary);
-      animation: fadeIn 1s ease 0.3s both;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-
-    .category-section {
-      margin-bottom: 50px;
-      animation: fadeInUp 0.6s ease both;
-    }
-
-    .category-title {
-      font-size: 1.4em;
-      font-weight: 700;
-      margin-bottom: 18px;
-      color: var(--text-primary);
-      padding-left: 12px;
-      border-left: 3px solid var(--accent);
-    }
-
-    .tool-item {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 15px;
-      margin-bottom: 12px;
-      transition: all 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
-      backdrop-filter: blur(10px);
-      position: relative;
-      overflow: hidden;
-    }
-
-    @keyframes fadeInUp {
-      from {
-        opacity: 0;
-        transform: translateY(30px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    .tool-item::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(135deg, var(--accent), #8b5cf6);
-      opacity: 0;
-      transition: opacity 0.3s ease;
-    }
-
-    .tool-item:hover {
-      transform: translateX(10px);
-      box-shadow: 0 10px 30px var(--shadow);
-      border-color: var(--accent);
-    }
-
-    .tool-item:hover::before {
-      opacity: 0.03;
-    }
-
-    .tool-header {
-      display: flex;
-      align-items: center;
-      margin-bottom: 6px;
-      position: relative;
-      z-index: 1;
-    }
-
-    .tool-icon {
-      display: none;
-    }
-
-    .tool-title {
-      font-size: 1.05em;
-      font-weight: 600;
-      color: var(--text-primary);
-    }
-
-    .tool-description {
-      color: var(--text-secondary);
-      line-height: 1.4;
-      margin-bottom: 2px;
-      position: relative;
-      z-index: 1;
-      font-size: 0.9em;
-    }
-
-    .tool-footer {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      position: relative;
-      z-index: 1;
-      flex-wrap: wrap;
-      gap: 12px;
-    }
-
-    .file-size {
-      color: var(--text-secondary);
-      font-size: 0.85em;
-    }
-
-    .download-btn {
-      padding: 10px 20px;
-      background: var(--accent);
-      color: white;
-      text-decoration: none;
-      border-radius: 50px;
-      font-weight: 600;
-      font-size: 0.85em;
-      transition: all 0.3s ease;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .download-btn:hover {
-      background: var(--accent-hover);
-      transform: scale(1.05);
-      box-shadow: 0 8px 20px rgba(59, 130, 246, 0.3);
-    }
-
-    .notification {
-      position: fixed;
-      bottom: 30px;
-      right: 30px;
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 15px;
-      padding: 20px;
-      backdrop-filter: blur(10px);
-      box-shadow: 0 10px 30px var(--shadow);
-      transform: translateX(400px);
-      transition: transform 0.3s ease;
-      z-index: 2000;
-      min-width: 300px;
-    }
-
-    .notification.show {
-      transform: translateX(0);
-    }
-
-    .notification-content {
-      display: flex;
-      align-items: center;
-      gap: 15px;
-    }
-
-    .notification-icon {
-      width: 40px;
-      height: 40px;
-      background: linear-gradient(135deg, #10b981, #059669);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 20px;
-    }
-
-    @media (max-width: 768px) {
-      h1 {
-        font-size: 2.2em;
-      }
-
-      .subtitle {
-        font-size: 1em;
-      }
-
-      header {
-        padding: 40px 15px 30px;
-      }
-
-      .container {
-        padding: 15px;
-      }
-
-      .category-title {
-        font-size: 1.5em;
-        margin-bottom: 20px;
-      }
-
-      .tool-item {
-        padding: 20px;
-      }
-
-      .tool-header {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-
-      .tool-description {
-        padding-left: 0;
-        margin-bottom: 8px;
-      }
-
-      .tool-footer {
-        padding-left: 0;
-        flex-direction: column;
-        align-items: flex-start;
-      }
-
-      .download-btn {
-        width: 100%;
-        justify-content: center;
-      }
-
-      .notification {
-        bottom: 20px;
-        right: 20px;
-        left: 20px;
-        min-width: auto;
-      }
-    }
-
-    @media (max-width: 480px) {
-      h1 {
-        font-size: 1.8em;
-      }
-
-      .subtitle {
-        font-size: 0.95em;
-      }
-
-      .tool-icon {
-        width: 45px;
-        height: 45px;
-        min-width: 45px;
-        font-size: 22px;
-      }
-
-      .tool-title {
-        font-size: 1.1em;
-      }
-
-      .tool-item {
-        padding: 18px;
-      }
-
-      .category-title {
-        font-size: 1.3em;
-      }
-    }
-  </style>
-</head>
-<body>
-  <div class="container">
-    <header>
-      <h1>🧰 Outils & Scripts</h1>
-      <p class="subtitle">Une collection d'utilitaires et de scripts pour faciliter votre quotidien numérique</p>
-    </header>
-
-    <div id="tool-sections"></div>
-  </div>
-
-  <div class="notification" id="notification">
-    <div class="notification-content">
-      <div class="notification-icon">✓</div>
-      <div>
-        <strong>Téléchargement lancé</strong>
-        <div style="font-size: 13px; color: var(--text-secondary); margin-top: 4px;">Votre fichier est en cours de téléchargement</div>
-      </div>
-    </div>
-  </div>
-
-  <script>
-    const tools = [
-      {
-        name: "Convertisseur CSV → JSON",
-        file: "assets/convertisseur-csv-json.exe",
-        description: "Convertit facilement des fichiers CSV en JSON pour les développeurs.",
-        category: "Développement",
-        icon: "🔄",
-        size: "1.8 MB"
-      },
-      {
-        name: "Gestionnaire de Paquets Python",
-        file: "https://drive.google.com/file/d/1pJLXlyuXWH2H05aRXmaSKlccl7iqq6ii/view?usp=drive_link",
-        description: "Application .exe graphique pour gérer vos paquets Python à travers différentes versions installées.",
-        category: "Développement",
-        icon: "📝",
-        size: "30 MB"
-      },
-      {
-        name: "Mini éditeur Markdown",
-        file: "assets/markdown-editor.exe",
-        description: "Un éditeur léger pour écrire et prévisualiser du Markdown.",
-        category: "Développement",
-        icon: "📝",
-        size: "4.2 MB"
-      },
-      {
-        name: "Pack d'icônes Flat Design",
-        file: "assets/icones-flat.zip",
-        description: "Une collection de 100 icônes modernes pour tes projets web ou apps.",
-        category: "Design",
-        icon: "🎨",
-        size: "8.7 MB"
-      },
-      {
-        name: "Script Python - Renommage intelligent",
-        file: "https://drive.google.com/file/d/1AEn8Jov4vcXdCf2Ln3OmLCuv_IMgR701/view?usp=drive_link",
-        description: "Renomme automatiquement des fichiers selon un modèle défini.",
-        category: "Script",
-        icon: "🐍",
-        size: "12 KB"
-      },
-      {
-        name: "Script de sauvegarde automatique",
-        file: "assets/sauvegarde-auto.py",
-        description: "Crée une copie de sécurité de tes dossiers importants chaque jour.",
-        category: "Script",
-        icon: "💾",
-        size: "15 KB"
-      },
-      {
-        name: "Nettoyeur de Bureau",
-        file: "assets/nettoyeur-bureau.exe",
-        description: "Supprime les fichiers temporaires et organise ton bureau en un clic.",
-        category: "Utilitaire",
-        icon: "🧹",
-        size: "2.4 MB"
-      }
-    ];
-
-    function organizeByCategory() {
-      const categories = {};
-      
-      tools.forEach(tool => {
-        if (!categories[tool.category]) {
-          categories[tool.category] = [];
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Outils & Scripts</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
-        categories[tool.category].push(tool);
-      });
 
-      Object.keys(categories).forEach(category => {
-        categories[category].sort((a, b) => a.name.localeCompare(b.name));
-      });
+        :root {
+            --bg-primary: #0f172a;
+            --bg-secondary: #1e293b;
+            --bg-card: rgba(30, 41, 59, 0.8);
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --accent: #3b82f6;
+            --accent-hover: #2563eb;
+            --border: rgba(148, 163, 184, 0.2);
+            --shadow: rgba(0, 0, 0, 0.3);
+        }
 
-      return categories;
-    }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
 
-    function renderTools() {
-      const container = document.getElementById("tool-sections");
-      const categorizedTools = organizeByCategory();
-      const sortedCategories = Object.keys(categorizedTools).sort();
+        body::before {
+            content: '';
+            position: fixed;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, var(--accent) 0%, transparent 70%);
+            opacity: 0.05;
+            animation: pulse 15s ease-in-out infinite;
+            pointer-events: none;
+        }
 
-      sortedCategories.forEach((category, categoryIndex) => {
-        const section = document.createElement("div");
-        section.className = "category-section";
-        section.style.animationDelay = `${categoryIndex * 0.2}s`;
+        @keyframes pulse {
 
-        const categoryTitle = document.createElement("h2");
-        categoryTitle.className = "category-title";
-        categoryTitle.textContent = category;
-        section.appendChild(categoryTitle);
+            0%,
+            100% {
+                transform: scale(1);
+            }
 
-        categorizedTools[category].forEach((tool, toolIndex) => {
-          const div = document.createElement("div");
-          div.className = "tool-item";
-          div.style.animationDelay = `${(categoryIndex * 0.2) + (toolIndex * 0.1)}s`;
-          div.innerHTML = `
+            50% {
+                transform: scale(1.1);
+            }
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            padding: 60px 20px 50px;
+            position: relative;
+        }
+
+        h1 {
+            font-size: 3em;
+            font-weight: 700;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, var(--accent), #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: fadeInDown 0.8s ease;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .subtitle {
+            font-size: 1.1em;
+            color: var(--text-secondary);
+            animation: fadeIn 1s ease 0.3s both;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        .category-section {
+            margin-bottom: 50px;
+            animation: fadeInUp 0.6s ease both;
+        }
+
+        .category-title {
+            font-size: 1.4em;
+            font-weight: 700;
+            margin-bottom: 18px;
+            color: var(--text-primary);
+            padding-left: 12px;
+            border-left: 3px solid var(--accent);
+        }
+
+        .tool-item {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 12px;
+            transition: all 0.3s ease-out;
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .tool-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--accent), #8b5cf6);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .tool-item:hover {
+            transform: translateX(10px);
+            box-shadow: 0 10px 30px var(--shadow);
+            border-color: var(--accent);
+        }
+
+        .tool-item:hover::before {
+            opacity: 0.03;
+        }
+
+        .tool-header {
+            display: flex;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .tool-icon {
+            display: none;
+        }
+
+        .tool-title {
+            font-size: 1.05em;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .tool-description {
+            color: var(--text-secondary);
+            line-height: 1.4;
+            position: relative;
+            z-index: 1;
+            font-size: 0.9em;
+            flex-grow: 1;
+        }
+
+        .tool-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+            gap: 12px;
+        }
+
+        .file-size {
+            color: var(--text-secondary);
+            font-size: 0.85em;
+        }
+
+        .download-btn {
+            padding: 10px 20px;
+            background: var(--accent);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.85em;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .download-btn:hover {
+            background: var(--accent-hover);
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(59, 130, 246, 0.3);
+        }
+
+        .notification {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            padding: 20px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 30px var(--shadow);
+            transform: translateX(400px);
+            transition: transform 0.3s ease;
+            z-index: 2000;
+            min-width: 300px;
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+
+        .notification-content {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .notification-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #10b981, #059669);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.2em;
+            }
+
+            .subtitle {
+                font-size: 1em;
+            }
+
+            header {
+                padding: 40px 15px 30px;
+            }
+
+            .container {
+                padding: 15px;
+            }
+
+            .category-title {
+                font-size: 1.5em;
+                margin-bottom: 20px;
+            }
+
+            .tool-item {
+                padding: 20px;
+            }
+
+            .tool-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .tool-description {
+                padding-left: 0;
+                margin-bottom: 8px;
+            }
+
+            .tool-footer {
+                padding-left: 0;
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .download-btn {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .notification {
+                bottom: 20px;
+                right: 20px;
+                left: 20px;
+                min-width: auto;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.8em;
+            }
+
+            .subtitle {
+                font-size: 0.95em;
+            }
+
+            .tool-icon {
+                width: 45px;
+                height: 45px;
+                min-width: 45px;
+                font-size: 22px;
+            }
+
+            .tool-title {
+                font-size: 1.1em;
+            }
+
+            .tool-item {
+                padding: 18px;
+            }
+
+            .category-title {
+                font-size: 1.3em;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>🧰 Outils & Scripts</h1>
+            <p class="subtitle">Une collection d'utilitaires et de scripts pour faciliter votre quotidien numérique</p>
+        </header>
+
+        <div id="tool-sections"></div>
+    </div>
+
+    <div class="notification" id="notification">
+        <div class="notification-content">
+            <div class="notification-icon">✓</div>
+            <div>
+                <strong>Téléchargement lancé</strong>
+                <div style="font-size: 13px; color: var(--text-secondary); margin-top: 4px;">Votre fichier est en cours
+                    de téléchargement</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const tools = [
+            {
+                name: "Convertisseur CSV → JSON",
+                file: "assets/convertisseur-csv-json.exe",
+                description: "Convertit facilement des fichiers CSV en JSON pour les développeurs.",
+                category: "Développement",
+                icon: "🔄",
+                size: "1.8 MB"
+            },
+            {
+                name: "Gestionnaire de Paquets Python",
+                file: "https://drive.google.com/file/d/1pJLXlyuXWH2H05aRXmaSKlccl7iqq6ii/view?usp=drive_link",
+                description: "Application .exe graphique pour gérer vos paquets Python à travers différentes versions installées.",
+                category: "Développement",
+                icon: "📝",
+                size: "30 MB"
+            },
+            {
+                name: "Mini éditeur Markdown",
+                file: "assets/markdown-editor.exe",
+                description: "Un éditeur léger pour écrire et prévisualiser du Markdown.",
+                category: "Développement",
+                icon: "📝",
+                size: "4.2 MB"
+            },
+            {
+                name: "Pack d'icônes Flat Design",
+                file: "assets/icones-flat.zip",
+                description: "Une collection de 100 icônes modernes pour tes projets web ou apps.",
+                category: "Design",
+                icon: "🎨",
+                size: "8.7 MB"
+            },
+            {
+                name: "Script Python - Renommage intelligent",
+                file: "https://drive.google.com/file/d/1AEn8Jov4vcXdCf2Ln3OmLCuv_IMgR701/view?usp=drive_link",
+                description: "Renomme automatiquement des fichiers selon un modèle défini.",
+                category: "Script",
+                icon: "🐍",
+                size: "12 KB"
+            },
+            {
+                name: "Script de sauvegarde automatique",
+                file: "assets/sauvegarde-auto.py",
+                description: "Crée une copie de sécurité de tes dossiers importants chaque jour.",
+                category: "Script",
+                icon: "💾",
+                size: "15 KB"
+            },
+            {
+                name: "Nettoyeur de Bureau",
+                file: "assets/nettoyeur-bureau.exe",
+                description: "Supprime les fichiers temporaires et organise ton bureau en un clic.",
+                category: "Utilitaire",
+                icon: "🧹",
+                size: "2.4 MB"
+            }
+        ];
+
+        function organizeByCategory() {
+            const categories = {};
+
+            tools.forEach(tool => {
+                if (!categories[tool.category]) {
+                    categories[tool.category] = [];
+                }
+                categories[tool.category].push(tool);
+            });
+
+            Object.keys(categories).forEach(category => {
+                categories[category].sort((a, b) => a.name.localeCompare(b.name));
+            });
+
+            return categories;
+        }
+
+        function renderTools() {
+            const container = document.getElementById("tool-sections");
+            const categorizedTools = organizeByCategory();
+            const sortedCategories = Object.keys(categorizedTools).sort();
+
+            sortedCategories.forEach((category, categoryIndex) => {
+                const section = document.createElement("div");
+                section.className = "category-section";
+                section.style.animationDelay = `${categoryIndex * 0.2}s`;
+
+                const categoryTitle = document.createElement("h2");
+                categoryTitle.className = "category-title";
+                categoryTitle.textContent = category;
+                section.appendChild(categoryTitle);
+
+                categorizedTools[category].forEach((tool, toolIndex) => {
+                    const div = document.createElement("div");
+                    div.className = "tool-item";
+                    div.style.animationDelay = `${(categoryIndex * 0.2) + (toolIndex * 0.1)}s`;
+                    div.innerHTML = `
             <div class="tool-header">
               <div class="tool-icon">${tool.icon}</div>
               <h3 class="tool-title">${tool.name}</h3>
@@ -468,23 +486,24 @@
               </a>
             </div>
           `;
-          section.appendChild(div);
-        });
+                    section.appendChild(div);
+                });
 
-        container.appendChild(section);
-      });
-    }
+                container.appendChild(section);
+            });
+        }
 
-    function showNotification(event, toolName) {
-      const notification = document.getElementById('notification');
-      notification.classList.add('show');
-      
-      setTimeout(() => {
-        notification.classList.remove('show');
-      }, 3000);
-    }
+        function showNotification(event, toolName) {
+            const notification = document.getElementById('notification');
+            notification.classList.add('show');
 
-    renderTools();
-  </script>
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+
+        renderTools();
+    </script>
 </body>
+
 </html>
