@@ -24,22 +24,11 @@
       --shadow: rgba(0, 0, 0, 0.3);
     }
 
-    body.light-mode {
-      --bg-primary: #f8fafc;
-      --bg-secondary: #e2e8f0;
-      --bg-card: rgba(255, 255, 255, 0.9);
-      --text-primary: #0f172a;
-      --text-secondary: #64748b;
-      --border: rgba(203, 213, 225, 0.5);
-      --shadow: rgba(0, 0, 0, 0.1);
-    }
-
     body {
       font-family: 'Inter', sans-serif;
       background: var(--bg-primary);
       color: var(--text-primary);
       min-height: 100vh;
-      transition: all 0.3s ease;
       position: relative;
       overflow-x: hidden;
     }
@@ -63,43 +52,19 @@
     }
 
     .container {
-      max-width: 1400px;
+      max-width: 900px;
       margin: 0 auto;
       padding: 20px;
     }
 
     header {
       text-align: center;
-      padding: 60px 20px 40px;
+      padding: 60px 20px 50px;
       position: relative;
     }
 
-    .theme-toggle {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 50px;
-      padding: 10px 20px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 14px;
-      color: var(--text-primary);
-      backdrop-filter: blur(10px);
-      transition: all 0.3s ease;
-      z-index: 1000;
-    }
-
-    .theme-toggle:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 20px var(--shadow);
-    }
-
     h1 {
-      font-size: 3.5em;
+      font-size: 3em;
       font-weight: 700;
       margin-bottom: 15px;
       background: linear-gradient(135deg, var(--accent), #8b5cf6);
@@ -121,10 +86,8 @@
     }
 
     .subtitle {
-      font-size: 1.2em;
+      font-size: 1.1em;
       color: var(--text-secondary);
-      max-width: 600px;
-      margin: 0 auto 40px;
       animation: fadeIn 1s ease 0.3s both;
     }
 
@@ -133,95 +96,30 @@
       to { opacity: 1; }
     }
 
-    .controls {
-      display: flex;
-      gap: 15px;
-      justify-content: center;
-      flex-wrap: wrap;
-      margin-bottom: 40px;
-      animation: fadeIn 1s ease 0.5s both;
+    .category-section {
+      margin-bottom: 50px;
+      animation: fadeInUp 0.6s ease both;
     }
 
-    .search-box {
-      position: relative;
-      flex: 1;
-      max-width: 400px;
-    }
-
-    .search-box input {
-      width: 100%;
-      padding: 12px 45px 12px 20px;
-      border: 1px solid var(--border);
-      border-radius: 50px;
-      background: var(--bg-card);
+    .category-title {
+      font-size: 1.8em;
+      font-weight: 700;
+      margin-bottom: 25px;
       color: var(--text-primary);
-      font-size: 15px;
-      outline: none;
-      transition: all 0.3s ease;
-      backdrop-filter: blur(10px);
+      padding-left: 15px;
+      border-left: 4px solid var(--accent);
     }
 
-    .search-box input:focus {
-      border-color: var(--accent);
-      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-    }
-
-    .search-icon {
-      position: absolute;
-      right: 18px;
-      top: 50%;
-      transform: translateY(-50%);
-      color: var(--text-secondary);
-    }
-
-    .filters {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-
-    .filter-btn {
-      padding: 10px 20px;
-      border: 1px solid var(--border);
-      border-radius: 50px;
-      background: var(--bg-card);
-      color: var(--text-secondary);
-      cursor: pointer;
-      font-size: 14px;
-      transition: all 0.3s ease;
-      backdrop-filter: blur(10px);
-    }
-
-    .filter-btn:hover {
-      border-color: var(--accent);
-      color: var(--accent);
-      transform: translateY(-2px);
-    }
-
-    .filter-btn.active {
-      background: var(--accent);
-      color: white;
-      border-color: var(--accent);
-    }
-
-    .tool-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 25px;
-      margin-bottom: 60px;
-    }
-
-    .tool-card {
+    .tool-item {
       background: var(--bg-card);
       border: 1px solid var(--border);
-      border-radius: 20px;
-      padding: 30px;
+      border-radius: 15px;
+      padding: 25px;
+      margin-bottom: 20px;
       transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
       backdrop-filter: blur(10px);
       position: relative;
       overflow: hidden;
-      animation: fadeInUp 0.6s ease both;
     }
 
     @keyframes fadeInUp {
@@ -235,7 +133,7 @@
       }
     }
 
-    .tool-card::before {
+    .tool-item::before {
       content: '';
       position: absolute;
       top: 0;
@@ -247,66 +145,66 @@
       transition: opacity 0.3s ease;
     }
 
-    .tool-card:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 20px 40px var(--shadow);
+    .tool-item:hover {
+      transform: translateX(10px);
+      box-shadow: 0 10px 30px var(--shadow);
       border-color: var(--accent);
     }
 
-    .tool-card:hover::before {
+    .tool-item:hover::before {
       opacity: 0.03;
     }
 
+    .tool-header {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 15px;
+      position: relative;
+      z-index: 1;
+    }
+
     .tool-icon {
-      width: 60px;
-      height: 60px;
+      width: 50px;
+      height: 50px;
+      min-width: 50px;
       background: linear-gradient(135deg, var(--accent), #8b5cf6);
-      border-radius: 15px;
+      border-radius: 12px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 28px;
-      margin-bottom: 20px;
-      position: relative;
-      z-index: 1;
+      font-size: 24px;
     }
 
-    .tool-card h3 {
-      font-size: 1.4em;
-      margin-bottom: 12px;
+    .tool-title {
+      font-size: 1.3em;
+      font-weight: 600;
       color: var(--text-primary);
-      font-weight: 600;
-      position: relative;
-      z-index: 1;
     }
 
-    .tool-category {
-      display: inline-block;
-      padding: 4px 12px;
-      background: rgba(59, 130, 246, 0.1);
-      color: var(--accent);
-      border-radius: 50px;
-      font-size: 12px;
-      margin-bottom: 12px;
-      font-weight: 600;
-      position: relative;
-      z-index: 1;
-    }
-
-    .tool-card p {
+    .tool-description {
       color: var(--text-secondary);
       line-height: 1.6;
       margin-bottom: 20px;
       position: relative;
       z-index: 1;
+      padding-left: 65px;
     }
 
     .tool-footer {
       display: flex;
       justify-content: space-between;
       align-items: center;
+      padding-left: 65px;
       position: relative;
       z-index: 1;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+
+    .file-size {
+      color: var(--text-secondary);
+      font-size: 14px;
     }
 
     .download-btn {
@@ -327,11 +225,6 @@
       background: var(--accent-hover);
       transform: scale(1.05);
       box-shadow: 0 8px 20px rgba(59, 130, 246, 0.3);
-    }
-
-    .file-size {
-      color: var(--text-secondary);
-      font-size: 13px;
     }
 
     .notification {
@@ -371,64 +264,98 @@
       font-size: 20px;
     }
 
-    .no-results {
-      text-align: center;
-      padding: 60px 20px;
-      color: var(--text-secondary);
-      font-size: 1.2em;
-    }
-
     @media (max-width: 768px) {
       h1 {
-        font-size: 2.5em;
+        font-size: 2.2em;
       }
 
-      .tool-grid {
-        grid-template-columns: 1fr;
+      .subtitle {
+        font-size: 1em;
       }
 
-      .controls {
+      header {
+        padding: 40px 15px 30px;
+      }
+
+      .container {
+        padding: 15px;
+      }
+
+      .category-title {
+        font-size: 1.5em;
+        margin-bottom: 20px;
+      }
+
+      .tool-item {
+        padding: 20px;
+      }
+
+      .tool-header {
         flex-direction: column;
+        align-items: flex-start;
       }
 
-      .search-box {
-        max-width: 100%;
+      .tool-description {
+        padding-left: 0;
+      }
+
+      .tool-footer {
+        padding-left: 0;
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .download-btn {
+        width: 100%;
+        justify-content: center;
+      }
+
+      .notification {
+        bottom: 20px;
+        right: 20px;
+        left: 20px;
+        min-width: auto;
+      }
+    }
+
+    @media (max-width: 480px) {
+      h1 {
+        font-size: 1.8em;
+      }
+
+      .subtitle {
+        font-size: 0.95em;
+      }
+
+      .tool-icon {
+        width: 45px;
+        height: 45px;
+        min-width: 45px;
+        font-size: 22px;
+      }
+
+      .tool-title {
+        font-size: 1.1em;
+      }
+
+      .tool-item {
+        padding: 18px;
+      }
+
+      .category-title {
+        font-size: 1.3em;
       }
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <button class="theme-toggle" onclick="toggleTheme()">
-      <span id="theme-icon">🌙</span>
-      <span id="theme-text">Mode sombre</span>
-    </button>
-
     <header>
       <h1>🧰 Outils & Scripts</h1>
       <p class="subtitle">Une collection d'utilitaires et de scripts pour faciliter votre quotidien numérique</p>
     </header>
 
-    <div class="controls">
-      <div class="search-box">
-        <input type="text" id="search" placeholder="Rechercher un outil..." onkeyup="filterTools()">
-        <span class="search-icon">🔍</span>
-      </div>
-    </div>
-
-    <div class="filters">
-      <button class="filter-btn active" data-category="all" onclick="filterByCategory('all')">Tous</button>
-      <button class="filter-btn" data-category="Utilitaire" onclick="filterByCategory('Utilitaire')">Utilitaires</button>
-      <button class="filter-btn" data-category="Script" onclick="filterByCategory('Script')">Scripts</button>
-      <button class="filter-btn" data-category="Design" onclick="filterByCategory('Design')">Design</button>
-      <button class="filter-btn" data-category="Développement" onclick="filterByCategory('Développement')">Développement</button>
-    </div>
-
-    <div class="tool-grid" id="tool-list"></div>
-    
-    <div class="no-results" id="no-results" style="display: none;">
-      Aucun outil trouvé 😕
-    </div>
+    <div id="tool-sections"></div>
   </div>
 
   <div class="notification" id="notification">
@@ -444,20 +371,20 @@
   <script>
     const tools = [
       {
-        name: "Nettoyeur de Bureau",
-        file: "assets/nettoyeur-bureau.exe",
-        description: "Supprime les fichiers temporaires et organise ton bureau en un clic.",
-        category: "Utilitaire",
-        icon: "🧹",
-        size: "2.4 MB"
+        name: "Convertisseur CSV → JSON",
+        file: "assets/convertisseur-csv-json.exe",
+        description: "Convertit facilement des fichiers CSV en JSON pour les développeurs.",
+        category: "Développement",
+        icon: "🔄",
+        size: "1.8 MB"
       },
       {
-        name: "Script Python - Renommage intelligent",
-        file: "assets/renommage.py",
-        description: "Renomme automatiquement des fichiers selon un modèle défini.",
-        category: "Script",
-        icon: "🐍",
-        size: "12 KB"
+        name: "Mini éditeur Markdown",
+        file: "assets/markdown-editor.exe",
+        description: "Un éditeur léger pour écrire et prévisualiser du Markdown.",
+        category: "Développement",
+        icon: "📝",
+        size: "4.2 MB"
       },
       {
         name: "Pack d'icônes Flat Design",
@@ -468,12 +395,12 @@
         size: "8.7 MB"
       },
       {
-        name: "Convertisseur CSV → JSON",
-        file: "assets/convertisseur-csv-json.exe",
-        description: "Convertit facilement des fichiers CSV en JSON pour les développeurs.",
-        category: "Développement",
-        icon: "🔄",
-        size: "1.8 MB"
+        name: "Script Python - Renommage intelligent",
+        file: "assets/renommage.py",
+        description: "Renomme automatiquement des fichiers selon un modèle défini.",
+        category: "Script",
+        icon: "🐍",
+        size: "12 KB"
       },
       {
         name: "Script de sauvegarde automatique",
@@ -484,82 +411,70 @@
         size: "15 KB"
       },
       {
-        name: "Mini éditeur Markdown",
-        file: "assets/markdown-editor.exe",
-        description: "Un éditeur léger pour écrire et prévisualiser du Markdown.",
-        category: "Développement",
-        icon: "📝",
-        size: "4.2 MB"
+        name: "Nettoyeur de Bureau",
+        file: "assets/nettoyeur-bureau.exe",
+        description: "Supprime les fichiers temporaires et organise ton bureau en un clic.",
+        category: "Utilitaire",
+        icon: "🧹",
+        size: "2.4 MB"
       }
     ];
 
-    let currentCategory = 'all';
-
-    function renderTools(toolsToRender = tools) {
-      const container = document.getElementById("tool-list");
-      const noResults = document.getElementById("no-results");
+    function organizeByCategory() {
+      const categories = {};
       
-      container.innerHTML = '';
-      
-      if (toolsToRender.length === 0) {
-        container.style.display = 'none';
-        noResults.style.display = 'block';
-        return;
-      }
-      
-      container.style.display = 'grid';
-      noResults.style.display = 'none';
-
-      toolsToRender.forEach((tool, index) => {
-        const div = document.createElement("div");
-        div.className = "tool-card";
-        div.style.animationDelay = `${index * 0.1}s`;
-        div.innerHTML = `
-          <div class="tool-icon">${tool.icon}</div>
-          <span class="tool-category">${tool.category}</span>
-          <h3>${tool.name}</h3>
-          <p>${tool.description}</p>
-          <div class="tool-footer">
-            <span class="file-size">${tool.size}</span>
-            <a href="${tool.file}" download class="download-btn" onclick="showNotification(event, '${tool.name}')">
-              <span>Télécharger</span>
-              <span>⬇️</span>
-            </a>
-          </div>
-        `;
-        container.appendChild(div);
+      tools.forEach(tool => {
+        if (!categories[tool.category]) {
+          categories[tool.category] = [];
+        }
+        categories[tool.category].push(tool);
       });
+
+      Object.keys(categories).forEach(category => {
+        categories[category].sort((a, b) => a.name.localeCompare(b.name));
+      });
+
+      return categories;
     }
 
-    function filterTools() {
-      const searchTerm = document.getElementById('search').value.toLowerCase();
-      let filtered = tools;
+    function renderTools() {
+      const container = document.getElementById("tool-sections");
+      const categorizedTools = organizeByCategory();
+      const sortedCategories = Object.keys(categorizedTools).sort();
 
-      if (currentCategory !== 'all') {
-        filtered = filtered.filter(tool => tool.category === currentCategory);
-      }
+      sortedCategories.forEach((category, categoryIndex) => {
+        const section = document.createElement("div");
+        section.className = "category-section";
+        section.style.animationDelay = `${categoryIndex * 0.2}s`;
 
-      if (searchTerm) {
-        filtered = filtered.filter(tool =>
-          tool.name.toLowerCase().includes(searchTerm) ||
-          tool.description.toLowerCase().includes(searchTerm) ||
-          tool.category.toLowerCase().includes(searchTerm)
-        );
-      }
+        const categoryTitle = document.createElement("h2");
+        categoryTitle.className = "category-title";
+        categoryTitle.textContent = category;
+        section.appendChild(categoryTitle);
 
-      renderTools(filtered);
-    }
+        categorizedTools[category].forEach((tool, toolIndex) => {
+          const div = document.createElement("div");
+          div.className = "tool-item";
+          div.style.animationDelay = `${(categoryIndex * 0.2) + (toolIndex * 0.1)}s`;
+          div.innerHTML = `
+            <div class="tool-header">
+              <div class="tool-icon">${tool.icon}</div>
+              <h3 class="tool-title">${tool.name}</h3>
+            </div>
+            <p class="tool-description">${tool.description}</p>
+            <div class="tool-footer">
+              <span class="file-size">${tool.size}</span>
+              <a href="${tool.file}" download class="download-btn" onclick="showNotification(event, '${tool.name}')">
+                <span>Télécharger</span>
+                <span>⬇️</span>
+              </a>
+            </div>
+          `;
+          section.appendChild(div);
+        });
 
-    function filterByCategory(category) {
-      currentCategory = category;
-      
-      document.querySelectorAll('.filter-btn').forEach(btn => {
-        btn.classList.remove('active');
+        container.appendChild(section);
       });
-      
-      event.target.classList.add('active');
-      
-      filterTools();
     }
 
     function showNotification(event, toolName) {
@@ -569,20 +484,6 @@
       setTimeout(() => {
         notification.classList.remove('show');
       }, 3000);
-    }
-
-    function toggleTheme() {
-      document.body.classList.toggle('light-mode');
-      const themeIcon = document.getElementById('theme-icon');
-      const themeText = document.getElementById('theme-text');
-      
-      if (document.body.classList.contains('light-mode')) {
-        themeIcon.textContent = '☀️';
-        themeText.textContent = 'Mode clair';
-      } else {
-        themeIcon.textContent = '🌙';
-        themeText.textContent = 'Mode sombre';
-      }
     }
 
     renderTools();
