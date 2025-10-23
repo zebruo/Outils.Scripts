@@ -102,20 +102,20 @@
     }
 
     .category-title {
-      font-size: 1.8em;
+      font-size: 1.4em;
       font-weight: 700;
-      margin-bottom: 25px;
+      margin-bottom: 18px;
       color: var(--text-primary);
-      padding-left: 15px;
-      border-left: 4px solid var(--accent);
+      padding-left: 12px;
+      border-left: 3px solid var(--accent);
     }
 
     .tool-item {
       background: var(--bg-card);
       border: 1px solid var(--border);
-      border-radius: 15px;
-      padding: 25px;
-      margin-bottom: 20px;
+      border-radius: 12px;
+      padding: 15px;
+      margin-bottom: 12px;
       transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
       backdrop-filter: blur(10px);
       position: relative;
@@ -158,67 +158,57 @@
     .tool-header {
       display: flex;
       align-items: center;
-      gap: 15px;
-      margin-bottom: 15px;
+      margin-bottom: 6px;
       position: relative;
       z-index: 1;
     }
 
     .tool-icon {
-      width: 50px;
-      height: 50px;
-      min-width: 50px;
-      background: linear-gradient(135deg, var(--accent), #8b5cf6);
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 24px;
+      display: none;
     }
 
     .tool-title {
-      font-size: 1.3em;
+      font-size: 1.05em;
       font-weight: 600;
       color: var(--text-primary);
     }
 
     .tool-description {
       color: var(--text-secondary);
-      line-height: 1.6;
-      margin-bottom: 20px;
+      line-height: 1.4;
+      margin-bottom: 8px;
       position: relative;
       z-index: 1;
-      padding-left: 65px;
+      font-size: 0.9em;
     }
 
     .tool-footer {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding-left: 65px;
       position: relative;
       z-index: 1;
       flex-wrap: wrap;
-      gap: 15px;
+      gap: 12px;
     }
 
     .file-size {
       color: var(--text-secondary);
-      font-size: 14px;
+      font-size: 0.85em;
     }
 
     .download-btn {
-      padding: 12px 24px;
+      padding: 10px 20px;
       background: var(--accent);
       color: white;
       text-decoration: none;
       border-radius: 50px;
       font-weight: 600;
-      font-size: 14px;
+      font-size: 0.85em;
       transition: all 0.3s ease;
       display: inline-flex;
       align-items: center;
-      gap: 8px;
+      gap: 6px;
     }
 
     .download-btn:hover {
@@ -297,6 +287,7 @@
 
       .tool-description {
         padding-left: 0;
+        margin-bottom: 8px;
       }
 
       .tool-footer {
@@ -466,7 +457,6 @@
               <span class="file-size">${tool.size}</span>
               <a href="${tool.file}" download class="download-btn" onclick="showNotification(event, '${tool.name}')">
                 <span>Télécharger</span>
-                <span>⬇️</span>
               </a>
             </div>
           `;
