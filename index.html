@@ -2,18 +2,590 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Outils & Scripts</title>
-  <link rel="stylesheet" href="style.css">
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat&family=Roboto&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg-primary: #0f172a;
+      --bg-secondary: #1e293b;
+      --bg-card: rgba(30, 41, 59, 0.8);
+      --text-primary: #f1f5f9;
+      --text-secondary: #94a3b8;
+      --accent: #3b82f6;
+      --accent-hover: #2563eb;
+      --border: rgba(148, 163, 184, 0.2);
+      --shadow: rgba(0, 0, 0, 0.3);
+    }
+
+    body.light-mode {
+      --bg-primary: #f8fafc;
+      --bg-secondary: #e2e8f0;
+      --bg-card: rgba(255, 255, 255, 0.9);
+      --text-primary: #0f172a;
+      --text-secondary: #64748b;
+      --border: rgba(203, 213, 225, 0.5);
+      --shadow: rgba(0, 0, 0, 0.1);
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      min-height: 100vh;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, var(--accent) 0%, transparent 70%);
+      opacity: 0.05;
+      animation: pulse 15s ease-in-out infinite;
+      pointer-events: none;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    header {
+      text-align: center;
+      padding: 60px 20px 40px;
+      position: relative;
+    }
+
+    .theme-toggle {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 50px;
+      padding: 10px 20px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      color: var(--text-primary);
+      backdrop-filter: blur(10px);
+      transition: all 0.3s ease;
+      z-index: 1000;
+    }
+
+    .theme-toggle:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px var(--shadow);
+    }
+
+    h1 {
+      font-size: 3.5em;
+      font-weight: 700;
+      margin-bottom: 15px;
+      background: linear-gradient(135deg, var(--accent), #8b5cf6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: fadeInDown 0.8s ease;
+    }
+
+    @keyframes fadeInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .subtitle {
+      font-size: 1.2em;
+      color: var(--text-secondary);
+      max-width: 600px;
+      margin: 0 auto 40px;
+      animation: fadeIn 1s ease 0.3s both;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .controls {
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 40px;
+      animation: fadeIn 1s ease 0.5s both;
+    }
+
+    .search-box {
+      position: relative;
+      flex: 1;
+      max-width: 400px;
+    }
+
+    .search-box input {
+      width: 100%;
+      padding: 12px 45px 12px 20px;
+      border: 1px solid var(--border);
+      border-radius: 50px;
+      background: var(--bg-card);
+      color: var(--text-primary);
+      font-size: 15px;
+      outline: none;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(10px);
+    }
+
+    .search-box input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    }
+
+    .search-icon {
+      position: absolute;
+      right: 18px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-secondary);
+    }
+
+    .filters {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .filter-btn {
+      padding: 10px 20px;
+      border: 1px solid var(--border);
+      border-radius: 50px;
+      background: var(--bg-card);
+      color: var(--text-secondary);
+      cursor: pointer;
+      font-size: 14px;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(10px);
+    }
+
+    .filter-btn:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    .filter-btn.active {
+      background: var(--accent);
+      color: white;
+      border-color: var(--accent);
+    }
+
+    .tool-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 25px;
+      margin-bottom: 60px;
+    }
+
+    .tool-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 30px;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      backdrop-filter: blur(10px);
+      position: relative;
+      overflow: hidden;
+      animation: fadeInUp 0.6s ease both;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .tool-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, var(--accent), #8b5cf6);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .tool-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 40px var(--shadow);
+      border-color: var(--accent);
+    }
+
+    .tool-card:hover::before {
+      opacity: 0.03;
+    }
+
+    .tool-icon {
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(135deg, var(--accent), #8b5cf6);
+      border-radius: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      margin-bottom: 20px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .tool-card h3 {
+      font-size: 1.4em;
+      margin-bottom: 12px;
+      color: var(--text-primary);
+      font-weight: 600;
+      position: relative;
+      z-index: 1;
+    }
+
+    .tool-category {
+      display: inline-block;
+      padding: 4px 12px;
+      background: rgba(59, 130, 246, 0.1);
+      color: var(--accent);
+      border-radius: 50px;
+      font-size: 12px;
+      margin-bottom: 12px;
+      font-weight: 600;
+      position: relative;
+      z-index: 1;
+    }
+
+    .tool-card p {
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin-bottom: 20px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .tool-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .download-btn {
+      padding: 12px 24px;
+      background: var(--accent);
+      color: white;
+      text-decoration: none;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 14px;
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .download-btn:hover {
+      background: var(--accent-hover);
+      transform: scale(1.05);
+      box-shadow: 0 8px 20px rgba(59, 130, 246, 0.3);
+    }
+
+    .file-size {
+      color: var(--text-secondary);
+      font-size: 13px;
+    }
+
+    .notification {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 15px;
+      padding: 20px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 10px 30px var(--shadow);
+      transform: translateX(400px);
+      transition: transform 0.3s ease;
+      z-index: 2000;
+      min-width: 300px;
+    }
+
+    .notification.show {
+      transform: translateX(0);
+    }
+
+    .notification-content {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .notification-icon {
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(135deg, #10b981, #059669);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+    }
+
+    .no-results {
+      text-align: center;
+      padding: 60px 20px;
+      color: var(--text-secondary);
+      font-size: 1.2em;
+    }
+
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 2.5em;
+      }
+
+      .tool-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .controls {
+        flex-direction: column;
+      }
+
+      .search-box {
+        max-width: 100%;
+      }
+    }
+  </style>
 </head>
 <body>
-  <header>
-    <h1>🧰 Outils & Scripts</h1>
-    <p>Une collection d'utilitaires et de scripts à télécharger pour faciliter votre quotidien numérique.</p>
-  </header>
+  <div class="container">
+    <button class="theme-toggle" onclick="toggleTheme()">
+      <span id="theme-icon">🌙</span>
+      <span id="theme-text">Mode sombre</span>
+    </button>
 
-  <div id="tool-list"></div>
+    <header>
+      <h1>🧰 Outils & Scripts</h1>
+      <p class="subtitle">Une collection d'utilitaires et de scripts pour faciliter votre quotidien numérique</p>
+    </header>
 
-  <script src="script.js"></script>
+    <div class="controls">
+      <div class="search-box">
+        <input type="text" id="search" placeholder="Rechercher un outil..." onkeyup="filterTools()">
+        <span class="search-icon">🔍</span>
+      </div>
+    </div>
+
+    <div class="filters">
+      <button class="filter-btn active" data-category="all" onclick="filterByCategory('all')">Tous</button>
+      <button class="filter-btn" data-category="Utilitaire" onclick="filterByCategory('Utilitaire')">Utilitaires</button>
+      <button class="filter-btn" data-category="Script" onclick="filterByCategory('Script')">Scripts</button>
+      <button class="filter-btn" data-category="Design" onclick="filterByCategory('Design')">Design</button>
+      <button class="filter-btn" data-category="Développement" onclick="filterByCategory('Développement')">Développement</button>
+    </div>
+
+    <div class="tool-grid" id="tool-list"></div>
+    
+    <div class="no-results" id="no-results" style="display: none;">
+      Aucun outil trouvé 😕
+    </div>
+  </div>
+
+  <div class="notification" id="notification">
+    <div class="notification-content">
+      <div class="notification-icon">✓</div>
+      <div>
+        <strong>Téléchargement lancé</strong>
+        <div style="font-size: 13px; color: var(--text-secondary); margin-top: 4px;">Votre fichier est en cours de téléchargement</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const tools = [
+      {
+        name: "Nettoyeur de Bureau",
+        file: "assets/nettoyeur-bureau.exe",
+        description: "Supprime les fichiers temporaires et organise ton bureau en un clic.",
+        category: "Utilitaire",
+        icon: "🧹",
+        size: "2.4 MB"
+      },
+      {
+        name: "Script Python - Renommage intelligent",
+        file: "assets/renommage.py",
+        description: "Renomme automatiquement des fichiers selon un modèle défini.",
+        category: "Script",
+        icon: "🐍",
+        size: "12 KB"
+      },
+      {
+        name: "Pack d'icônes Flat Design",
+        file: "assets/icones-flat.zip",
+        description: "Une collection de 100 icônes modernes pour tes projets web ou apps.",
+        category: "Design",
+        icon: "🎨",
+        size: "8.7 MB"
+      },
+      {
+        name: "Convertisseur CSV → JSON",
+        file: "assets/convertisseur-csv-json.exe",
+        description: "Convertit facilement des fichiers CSV en JSON pour les développeurs.",
+        category: "Développement",
+        icon: "🔄",
+        size: "1.8 MB"
+      },
+      {
+        name: "Script de sauvegarde automatique",
+        file: "assets/sauvegarde-auto.py",
+        description: "Crée une copie de sécurité de tes dossiers importants chaque jour.",
+        category: "Script",
+        icon: "💾",
+        size: "15 KB"
+      },
+      {
+        name: "Mini éditeur Markdown",
+        file: "assets/markdown-editor.exe",
+        description: "Un éditeur léger pour écrire et prévisualiser du Markdown.",
+        category: "Développement",
+        icon: "📝",
+        size: "4.2 MB"
+      }
+    ];
+
+    let currentCategory = 'all';
+
+    function renderTools(toolsToRender = tools) {
+      const container = document.getElementById("tool-list");
+      const noResults = document.getElementById("no-results");
+      
+      container.innerHTML = '';
+      
+      if (toolsToRender.length === 0) {
+        container.style.display = 'none';
+        noResults.style.display = 'block';
+        return;
+      }
+      
+      container.style.display = 'grid';
+      noResults.style.display = 'none';
+
+      toolsToRender.forEach((tool, index) => {
+        const div = document.createElement("div");
+        div.className = "tool-card";
+        div.style.animationDelay = `${index * 0.1}s`;
+        div.innerHTML = `
+          <div class="tool-icon">${tool.icon}</div>
+          <span class="tool-category">${tool.category}</span>
+          <h3>${tool.name}</h3>
+          <p>${tool.description}</p>
+          <div class="tool-footer">
+            <span class="file-size">${tool.size}</span>
+            <a href="${tool.file}" download class="download-btn" onclick="showNotification(event, '${tool.name}')">
+              <span>Télécharger</span>
+              <span>⬇️</span>
+            </a>
+          </div>
+        `;
+        container.appendChild(div);
+      });
+    }
+
+    function filterTools() {
+      const searchTerm = document.getElementById('search').value.toLowerCase();
+      let filtered = tools;
+
+      if (currentCategory !== 'all') {
+        filtered = filtered.filter(tool => tool.category === currentCategory);
+      }
+
+      if (searchTerm) {
+        filtered = filtered.filter(tool =>
+          tool.name.toLowerCase().includes(searchTerm) ||
+          tool.description.toLowerCase().includes(searchTerm) ||
+          tool.category.toLowerCase().includes(searchTerm)
+        );
+      }
+
+      renderTools(filtered);
+    }
+
+    function filterByCategory(category) {
+      currentCategory = category;
+      
+      document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.classList.remove('active');
+      });
+      
+      event.target.classList.add('active');
+      
+      filterTools();
+    }
+
+    function showNotification(event, toolName) {
+      const notification = document.getElementById('notification');
+      notification.classList.add('show');
+      
+      setTimeout(() => {
+        notification.classList.remove('show');
+      }, 3000);
+    }
+
+    function toggleTheme() {
+      document.body.classList.toggle('light-mode');
+      const themeIcon = document.getElementById('theme-icon');
+      const themeText = document.getElementById('theme-text');
+      
+      if (document.body.classList.contains('light-mode')) {
+        themeIcon.textContent = '☀️';
+        themeText.textContent = 'Mode clair';
+      } else {
+        themeIcon.textContent = '🌙';
+        themeText.textContent = 'Mode sombre';
+      }
+    }
+
+    renderTools();
+  </script>
 </body>
 </html>
