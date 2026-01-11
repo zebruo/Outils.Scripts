@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ToolBox Normandie - Pastel</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="logo">ToolBox</div>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="#" onclick="showPage('home')">Honceuil</a></li>
+            <li><a href="#" onclick="showPage('ouills')">Ouills</a></li>
+            <li><a href="#" onclick="showPage('tools')">Tools</a></li>
+            <li><a href="#" onclick="showPage('apps')">Apps</a></li>
+        </ul>
+        <div class="burger" onclick="toggleMenu()">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </nav>
+
+    <main id="content">
+        <section id="home" class="page active">
+            <h1 class="page-title">ToolBox Normandie</h1>
+            <div class="grid-container home-cards">
+                <div class="card home-card" onclick="showPage('ouills')">
+                    <div class="card-tag">ACCÈS</div>
+                    <h3>Ouills</h3>
+                    <p>Vos outils de gestion</p>
+                    <div class="color-sample light-blue"></div>
+                </div>
+                <div class="card home-card" onclick="showPage('tools')">
+                    <div class="card-tag">ACCÈS</div>
+                    <h3>Tools</h3>
+                    <p>Vos ressources à télécharger</p>
+                    <div class="color-sample light-pink"></div>
+                </div>
+                <div class="card home-card" onclick="showPage('apps')">
+                    <div class="card-tag">ACCÈS</div>
+                    <h3>Apps</h3>
+                    <p>Applications JS en ligne</p>
+                    <div class="color-sample light-green"></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="ouills" class="page">
+            <h1 class="page-title">Ouills</h1>
+            <div class="grid-container">
+                <div class="card wide-card">
+                    <div class="card-tag">FICHIER</div>
+                    <h3>Gestionalité</h3>
+                    <p>Templates PDF</p>
+                    <div class="card-buttons">
+                        <button class="btn green-btn">btn</button>
+                        <button class="download-btn blue-btn">download btn</button>
+                    </div>
+                </div>
+                <div class="card wide-card">
+                    <div class="card-tag">OUILLS</div>
+                    <h3>Ganorrolle</h3>
+                    <p>Télécamonment</p>
+                    <div class="card-buttons">
+                        <button class="btn pink-btn">btn</button>
+                        <button class="download-btn blue-btn">download btn</button>
+                    </div>
+                </div>
+                 <div class="card wide-card">
+                    <div class="card-tag">OUILLS</div>
+                    <h3>Disserriwee</h3>
+                    <p>Intégriles candiers</p>
+                    <div class="card-buttons">
+                        <button class="btn pink-btn">btn</button>
+                        <button class="download-btn blue-btn">download btn</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="tools" class="page">
+            <h1 class="page-title">Tools</h1>
+            <div class="grid-container">
+                <div class="card">
+                    <div class="card-tag green-tag">FICHIER</div>
+                    <h3>Hegisilite PDP</h3>
+                    <p>Icons & Logos</p>
+                    <div class="card-colors">
+                        <div class="color-sample green-sample"></div>
+                        <div class="color-sample pink-sample"></div>
+                        <div class="color-sample blue-sample"></div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-tag">OUILLS</div>
+                    <h3>De detjirn sensens</h3>
+                    <p>Icônes & Logos</p>
+                     <div class="card-colors">
+                        <div class="color-sample blue-sample"></div>
+                        <div class="color-sample pink-sample"></div>
+                        <div class="color-sample green-sample"></div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-tag">Eeckomtation</div>
+                    <h3>Partiture</h3>
+                    <input type="text" placeholder="display block">
+                    <button class="btn download-btn">download btn</button>
+                </div>
+                 <div class="card">
+                    <div class="card-tag">Bécrrenalten</div>
+                    <h3>Nosevete damdi linds</h3>
+                    <p>Delitazmi mamuédi el torge nisse 12s</p>
+                    <div class="card-buttons">
+                        <button class="btn pink-btn">btn</button>
+                        <button class="download-btn blue-btn">download btn</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="apps" class="page">
+            <h1 class="page-title">Apps</h1>
+            <div class="grid-container">
+                <div class="card">
+                    <div class="card-tag">Parzs Intation</div>
+                    <h3>Feltamee, sives, Colitin</h3>
+                    <p>de de resibntritet ded & blume 12s</p>
+                    <div class="card-buttons">
+                        <button class="btn pink-btn">btn</button>
+                        <button class="download-btn blue-btn">download btn</button>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-tag">Compter de Mots</div>
+                    <h3>Pionnee de Mar</h3>
+                    <textarea id="wordInput" placeholder="Tapply cost..."></textarea>
+                    <p class="word-count-display">Mots : <span id="wordCount">0</span></p>
+                </div>
+                <div class="card">
+                    <div class="card-tag">Gils:turation</div>
+                    <h3>Biawmi D.S ease</h3>
+                    <div class="color-sample blue-sample big-sample"></div>
+                    <div class="card-buttons">
+                        <button class="btn pink-btn">btn</button>
+                        <button class="download-btn blue-btn">download btn</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2024 Blox - Pastel Edition. Tous draits réservés.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
